@@ -1,0 +1,57 @@
+﻿@model AlbergoCifa.Models.Prenotazione
+@{
+    ViewBag.Title = "CheckOut";
+}
+
+<h2>CheckOut</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            #@Html.DisplayNameFor(model => model.IdCamera)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataInizio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataFine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tariffa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Caparra)
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            #@Model.IdCamera
+        </td>
+        <td>
+            @Model.DataInizio.ToShortDateString()
+        </td>
+        <td>
+            @Model.DataFine.ToShortDateString()
+        </td>
+        <td>
+            $@Model.Tariffa
+        </td>
+        <td>
+            $@Model.Caparra
+        </td>
+    </tr>
+</table>
+
+<ul>
+    @foreach (AlbergoCifa.Models.RichiestaServizio item in ViewBag.ListaServizi)
+    {
+        <li>@AlbergoCifa.Models.DB.getServizioByIdServizio(item.IdServizio).Descrizione x @item.Quantita in Data @item.Data.ToShortDateString() Costo/Unità: $@AlbergoCifa.Models.DB.getServizioByIdServizio(item.IdServizio).Prezzo</li>
+    }
+</ul>
+
+<h4>Totale: $@(Model.Tariffa - Model.Caparra + ViewBag.CostoServizi)</h4>
+
+<div class="col-md-offset-2 col-md-10">
+    @Html.ActionLink("Paga", "Paga", new { id = Model.Id }, new {@class = "btn btn-warning"})
+</div>

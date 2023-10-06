@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Queries";
+}
+
+<h2>Queries</h2>
+
+<div class="row row-cols-3 align-items-end justify-content-around">
+    <div class="col d-flex flex-column">
+        <label for="CF">Codice fiscale</label>
+        <input name="CF" id="cfField" />
+        <button class="btn btn-primary" id="searchButton">Cerca</button>
+        <ul id="listaPrenotazioni"></ul>
+    </div>
+    <div class="col d-flex flex-column">
+        <button class="btn btn-primary" id="PensioneCompleta">Visualizza Prenotazioni per Pensione Completa</button>
+        <ul id="listaPensioneCompleta"></ul>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#searchButton").click(function () {
+                $("#listaPrenotazioni").empty();
+                var cf = $("#cfField").val();
+                $.ajax({
+                    method: 'GET',
+                    url: "SearchByCF",
+                    data: { cf: cf },
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            var licurrent = "<li>" +
+                                "ID: #" + v.Id + "<br>" +
+                                "Data Prenotazione: " + v.DataPrenotazione + "<br>" +
+                                "</li>";
+                            $("#listaPrenotazioni").append(licurrent);
+                        });
+                    }
+                });
+            });
+
+            $("#PensioneCompleta").click(function () {
+                $("#listaPensioneCompleta").empty();
+                $.ajax({
+                    method: 'GET',
+                    url: "getTotPrenotazioniPerPensioneCompleta",
+                    success: function (data) {
+                        var licurrent = "<li>" +
+                            "Totale Prenotazioni per Pensione Completa: " + data +
+                            "</li>";
+                        $("#listaPensioneCompleta").append(licurrent);
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,110 @@
+﻿@model IEnumerable<AlbergoCifa.Models.Prenotazione>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Lista Prenotazioni Attive</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPrenotazione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataInizio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataFine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Caparra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tariffa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MezzaPensione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrimaColazione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdCamera)
+        </th>
+        @*<th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPrenotazione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInizio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFine)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Caparra)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Tariffa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MezzaPensione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrimaColazione)
+            </td>
+            <td>
+                #@Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
+                #@Html.DisplayFor(modelItem => item.IdCamera)
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>*@
+        </tr>
+    }
+
+</table>
+
+<h2 class="text-center">Lista Prenotazioni Concluse</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPrenotazione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tariffa)
+        </th>
+        <th>
+            Costo totale(+Servizi)
+        </th>
+    </tr>
+
+    @foreach (AlbergoCifa.Models.Prenotazione item in ViewBag.ListaPrenotazioniConcluse)
+    {
+        <tr>
+            <td>
+                @item.DataPrenotazione.ToShortDateString()
+            </td>
+            <td>
+                $@item.Tariffa
+            </td>
+            <td>
+                $@(AlbergoCifa.Models.RichiestaServizio.CalcolaCostoTotale(AlbergoCifa.Models.DB.getAllServiziRichiestiByIdPrenotazione(item.Id))+item.Tariffa)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,90 @@
+﻿@model IEnumerable<AlbergoCifa.Models.Camera>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Lista Camere Libere</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            #@Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Singola)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prezzo) ($/Day)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                #@Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descrizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Singola)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Prezzo)
+            </td>
+            <td>
+                @Html.ActionLink("Effettua Prenotazione", "AddCliente","Cliente", new { id = item.Id }, new { @class = "btn btn-success" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<h2 class="text-center">Lista Camere Occupate</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            #@Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Singola)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prezzo) ($/Day)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (AlbergoCifa.Models.Camera item in ViewBag.CamereOccupate)
+    {
+        <tr>
+            <td>
+                #@item.Id
+            </td>
+            <td>
+                @item.Descrizione
+            </td>
+            <td>
+                @item.Singola
+            </td>
+            <td>
+                $@item.Prezzo
+            </td>
+            <td>
+                @Html.ActionLink("Aggiungi Servizio", "AddServizio","Servizio", new { id = item.Id }, new { @class = "btn btn-success" })
+                @Html.ActionLink("CheckOut", "CheckOut", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
