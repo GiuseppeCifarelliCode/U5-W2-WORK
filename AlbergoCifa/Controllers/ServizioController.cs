@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace AlbergoCifa.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ServizioController : Controller
     {
         public List<Servizio> s = DB.getAllServizi();

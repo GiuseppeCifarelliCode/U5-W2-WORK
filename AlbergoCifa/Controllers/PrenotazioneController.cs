@@ -7,8 +7,10 @@ using System.Web.Mvc;
 
 namespace AlbergoCifa.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PrenotazioneController : Controller
     {
+
         // GET: Prenotazione
         public ActionResult Index()
         {
